@@ -8,7 +8,7 @@ import { stripePromise } from '@/services/payment';
 const Payment = ({client_secret}:{client_secret:string}) => {
     return (
         <div>
-            <h1>this is also payment page component</h1>
+            
             <Elements 
             stripe={stripePromise}
              options={{

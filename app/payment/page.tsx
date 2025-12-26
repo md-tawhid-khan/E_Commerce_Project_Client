@@ -9,8 +9,10 @@ const PaymentPage = async({params}:{params:string}) => {
     const clientSecret = res.data.clientSecret ;
     console.log(res.data.clientSecret) ;
     return (
-        <div>
-            <h1>this is payment page </h1>
+        <div className='mx-auto text-center md:w-4/12 my-8'>
+            
+            <p className='text-yellow-600 mb-2'>------------- please payment to buy your order -------------------</p>
+            <h1 className='text-3xl uppercase border-y-4 py-4'>Payment</h1>
             <Payment client_secret={clientSecret} />
         </div>
     );

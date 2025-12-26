@@ -23,7 +23,7 @@ const Checkout = () => {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/dashboard/payment-history`,
+        return_url: `http://localhost:3000/payment/history`,
       },
     });
 
@@ -40,18 +40,18 @@ const Checkout = () => {
       showConfirmButton: false,
     });
 
-    router.push("/dashboard/payment-history");
+    router.push("/");
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* 👇 THIS IS WHERE CARD INFO APPEARS */}
+     
       <PaymentElement />
 
       <button
         type="submit"
         disabled={!stripe || loading}
-        className="btn btn-ghost mt-4"
+        className="bg-blue-300 hover:bg-blue-600  p-2 border rounded-xl mt-4  cursor-pointer"
       >
         {loading ? "Processing..." : "Pay"}
       </button>
