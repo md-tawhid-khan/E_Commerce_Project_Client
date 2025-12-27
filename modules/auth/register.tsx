@@ -13,48 +13,60 @@ import {
 import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
+
 import Link from "next/link";
 
 
-
-
-const LoginForm = () => {
-  const form = useForm();  
- 
-  const {
-    formState: { isSubmitting },
-  } = form;
+const RegisterForm = () => {
+  const form = useForm();
 
   
-
-
+  
+ 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-    
-     
+      
       form.reset()
     } catch (error: any) {
       console.log(error);
+      throw new Error(error.message)
     }
   };
 
   return (
     <div className="borde-2 border-gray-300 rounded-xl flex flex-col gap-10 max-w-md w-full p-5 bg-gray-100 ">
       <div className="flex items-center space-x-4">
-       
+   
         <div>
-          <h1 className="text-xl font-semibold">Log in</h1>
+          <h1 className="text-xl font-semibold">Register</h1>
           <p className="text-sm font-extralight">
             join us today and start your jurney
           </p>
         </div>
       </div>
       <div className="max-w-md text-blue-400">
-      
         <Form {...form}>
-          
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-           
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>User name</FormLabel>
+                  <FormControl className="mx-auto ">
+                    <Input
+                      className="text-black bg-white"
+                      type="text"
+                      placeholder="give your name"
+                      {...field}
+                      value={field.value || ""}
+                    />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
@@ -95,23 +107,21 @@ const LoginForm = () => {
                 </FormItem>
               )}
             />
- 
-               
             
-            <Button className="w-full">
-                submit
+            <Button
+              
+              type="submit"
+              className="w-full"
+            >
+              Register 
             </Button>
           </form>
-         
         </Form>
-             
-             <div className="mt-4 flex gap-3">
-              <p>do not have any account</p>
-               <Link href='/register' className="underline">register</Link> 
-               </div>
+
+          <div className="mt-4 flex gap-3"><p>do you have any account</p> <Link href='/login' className="underline">login</Link> </div>
       </div>
     </div>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
