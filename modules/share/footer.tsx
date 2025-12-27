@@ -39,7 +39,7 @@ const Footer = () => {
         <hr />
         <ul className="flex justify-center space-x-6 text-sm text-gray-800 font-medium my-4">
          {
-            navLink.map(({href,label},index)=>(<Link href={'/'} key={index}>{label}</Link>))
+            navLink.map(({label},index)=>(<Link href={'/'} key={index}>{label}</Link>))
          }
         </ul>
 

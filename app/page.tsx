@@ -1,5 +1,5 @@
-import OrderComponent from "@/component/orderComponent";
-import { createOrder } from "@/services/order";
+import OrderComponent from "@/modules/orderComponent";
+// import { createOrder } from "@/services/order";
 
 export default function Home() {
 

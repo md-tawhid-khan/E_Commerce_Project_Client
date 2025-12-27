@@ -1,4 +1,4 @@
-import PaymentHistory from '@/component/paymentHistory';
+import PaymentHistory from '@/modules/paymentHistory';
 import { sendPaymentIntoVerify } from '@/services/payment';
 
 

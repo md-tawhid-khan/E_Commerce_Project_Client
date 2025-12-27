@@ -1,4 +1,4 @@
-import Payment from '@/component/payment';
+import Payment from '@/modules/payment';
 import { getClientSecret } from '@/services/payment';
 import React from 'react';
 
