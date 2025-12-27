@@ -15,9 +15,12 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 
 import Link from "next/link";
+import { userRegister } from "@/services/auth";
+import { useRouter } from "next/navigation";
 
 
 const RegisterForm = () => {
+  const router = useRouter() ;
   const form = useForm();
 
   
@@ -25,7 +28,13 @@ const RegisterForm = () => {
  
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      
+      console.log(data) ;
+
+      const userInfo = {data:data} ;
+      const res = await userRegister(userInfo) ;
+      if(res.success){
+         router.push('/login') ;
+      }     
       form.reset()
     } catch (error: any) {
       console.log(error);
