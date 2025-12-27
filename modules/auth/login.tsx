@@ -14,11 +14,14 @@ import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import Link from "next/link";
+import { userLogin } from "@/services/auth";
+import { useRouter } from "next/navigation";
 
 
 
 
 const LoginForm = () => {
+  const router = useRouter();
   const form = useForm();  
  
   const {
@@ -30,11 +33,21 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-    
      
-      form.reset()
+      const formData={data:data} ;
+
+      console.log(formData) ;
+
+     const res = await userLogin(formData) ;
+     console.log(res) ;
+     if(res.success){
+        router.push('/') ;
+     }
+     
+      form.reset() ;
     } catch (error: any) {
       console.log(error);
+      form.reset() ;
     }
   };
 

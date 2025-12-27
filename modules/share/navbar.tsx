@@ -24,7 +24,7 @@ export default function Navbar() {
 // }
 
   return (
-    <header className="border-b w-full">
+    <header className="border-b w-full bg-amber-50">
       <div className="container flex justify-between items-center mx-auto h-16 px-3">
         <h1 className="text-2xl font-black flex items-center">
         E_COMMERCE PROJECT
