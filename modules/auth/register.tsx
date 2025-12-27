@@ -17,6 +17,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
 import { userRegister } from "@/services/auth";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 
 const RegisterForm = () => {
@@ -28,13 +29,25 @@ const RegisterForm = () => {
  
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      console.log(data) ;
+     
 
       const userInfo = {data:data} ;
       const res = await userRegister(userInfo) ;
       if(res.success){
+        Swal.fire({
+  title: "registered !",
+  icon: "success",
+  draggable: true
+});
          router.push('/login') ;
-      }     
+      } else{
+         Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text:res.message ,
+  
+});
+      }    
       form.reset()
     } catch (error: any) {
       console.log(error);

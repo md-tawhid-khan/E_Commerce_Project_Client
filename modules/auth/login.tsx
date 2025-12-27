@@ -16,6 +16,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
 import { userLogin } from "@/services/auth";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 
 
@@ -41,7 +42,20 @@ const LoginForm = () => {
      const res = await userLogin(formData) ;
      console.log(res) ;
      if(res.success){
+      Swal.fire({
+  title: "log in !",
+  icon: "success",
+  draggable: true
+});
         router.push('/') ;
+     }
+     else{
+      Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: res.message,
+  
+});
      }
      
       form.reset() ;
