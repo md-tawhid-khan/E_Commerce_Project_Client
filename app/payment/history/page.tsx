@@ -1,4 +1,4 @@
-import PaymentHistory from '@/modules/paymentHistory';
+import PaymentHistory from '@/modules/stripe_Payments/paymentHistory';
 import { sendPaymentIntoVerify } from '@/services/payment';
 
 

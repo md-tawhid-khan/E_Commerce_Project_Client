@@ -9,11 +9,14 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import SearchTerm from "../searchTerm/searchTerm";
+import { useAppSelector } from "@/redux/hook";
+import { cartCountSelector } from "@/redux/feature/cartSlice";
 
 
 
 
 export default function Navbar() {
+   const selector = useAppSelector(cartCountSelector);
 
 // const handleLogOut=async()=>{
 //   await logout()
@@ -38,7 +41,7 @@ export default function Navbar() {
           <Link href='/cart'>
           <Button  variant="outline" className="rounded-full p-0 size-10 cursor-pointer indicator">
             <ShoppingBag />
-            
+             <span className="badge badge-sm indicator-item text-blue-300 text-xl">{selector}</span>
           </Button>
           </Link>
            <Link href="/login">

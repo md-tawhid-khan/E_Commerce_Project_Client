@@ -1,10 +1,15 @@
 import CartBanner from "@/components/cartBanner/CartBanner";
 import AllProducts from "@/modules/allProducts/AllProducts";
 import OrderComponent from "@/modules/orderComponent";
+
 import { getAllProduct } from "@/services/product";
 // import { createOrder } from "@/services/order";
 
+
+
 export default async function  Home() {
+
+    
 
   const res = await getAllProduct() ;
   const products = res?.data ;

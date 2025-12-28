@@ -1,5 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
+
 import { Button } from "@/components/ui/button";
+import { orderedProductSelector, subTotalSelector } from "@/redux/feature/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+
+import { useRouter } from "next/navigation";
 
 //import { citySelector, clearCart, couponSelector, discountAmountSelector, grandTotalSeclector, orderedProductSelector, orderSelector, shippingAddressSelector, shippingCostSelector, subTotalSelector, } from "@/redux/features/cartSlice";
 // import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -9,69 +15,58 @@ import { Button } from "@/components/ui/button";
 
 
 
-const PaymentDetails = () => {
+const PaymentDetails = ({user}:{user:any}) => {
 
-//   const subTotal=useAppSelector(subTotalSelector) 
-//   const shippingCost=useAppSelector(shippingCostSelector)
-//   const grandTotalCost=useAppSelector(grandTotalSeclector)
+  const subTotal=useAppSelector(subTotalSelector) 
+
+
+
+  // const grandTotalCost=useAppSelector(grandTotalSeclector)
 //   const order=useAppSelector(orderSelector)
-//   const city=useAppSelector(citySelector)
-//   const shippingAddress=useAppSelector(shippingAddressSelector)
-//   const products=useAppSelector(orderedProductSelector)
-//   const {user}=useUser()
 
-//   const discountAmount=useAppSelector(discountAmountSelector)
-//   const coupon=useAppSelector(couponSelector)
-//   const dispatch=useAppDispatch()
+  const products=useAppSelector(orderedProductSelector)
+
+
+  // const dispatch=useAppDispatch()
   
 
-//   const router=useRouter()
+
+  const router=useRouter()
         
     const handleOrder=async()=>{
-    //   const orderLoading=toast.loading('order is being placed')
-    //   try {
-    //     if(!user){
-    //        router.push("/login")
-    //        throw new Error("user in missing")
-    //     }
-    //       if(!city){
-    //     throw new Error("city is missing")
-    //   }
-    //   if(!shippingAddress){
-    //     throw new Error("shipping address is missing")
-    //   }
-    //    if(products.length === 0){
-    //     throw new Error("whart are you order, order card is empty")
-    //    }
-
-    //    let couponData ;
-       
-    //    if(coupon.code){
-    //     couponData={
-    //       ...order, coupon:coupon._id
-    //     }
-    //    }
-    //    else{
-    //     couponData=order
-    //    }
-     
-    //    const res=await createOrder(couponData)
-    //    console.log(res)
+      // const orderLoading=toast.loading('order is being placed')
+      try {
+        if(!user){
+           router.push("/login")
+           throw new Error("user in missing")
+        }
+          
       
-    //    if(res.success){
-    //       toast.success(res.message,{id:orderLoading})
-    //        dispatch(clearCart());
-    //     router.push(res.data.paymentUrl);
-    //    }
+       if(products.length === 0){
+        throw new Error("whart are you order, order card is empty")
+       }
 
-    //    if(!res.success){
-    //         toast.error(res.message,{id:orderLoading} )
+       
+       
+     
+      //  const res=await createOrder(couponData)
+      //  console.log(res)
+      
+      //  if(res.success){
+      //     toast.success(res.message,{id:orderLoading})
+      //      dispatch(clearCart());
+      //   router.push(res.data.paymentUrl);
+      //  }
+
+      //  if(!res.success){
+      //       toast.error(res.message,{id:orderLoading} )
            
-    //    }
+      //  }
 
-    //   } catch (error:any) {
-    //      toast.error(error.message,{id:orderLoading})
-    //   }
+      } 
+      catch (error:any) {
+        //  toast.error(error.message,{id:orderLoading})
+      }
        console.log(" payment detail ")
     }
     return (
@@ -80,15 +75,15 @@ const PaymentDetails = () => {
       <div className="space-y-2 mt-4">
         <div className="flex justify-between">
           <p className="text-gray-500 ">Subtotal</p>
-          {/* <p className="font-semibold">{subTotal}</p> */}
-          <p className="font-semibold">0</p>
+          <p className="font-semibold">{subTotal}</p>
+         
         </div>
    
       </div>
       <div className="flex justify-between mt-10 mb-5">
         <p className="text-gray-500 ">Grand Total</p>
-        {/* <p className="font-semibold">{currencyFormater(grandTotalCost)}</p> */}
-        <p className="font-semibold">0</p>
+        <p className="font-semibold">{subTotal}</p>
+       
       </div>
       <Button
         onClick={handleOrder}
