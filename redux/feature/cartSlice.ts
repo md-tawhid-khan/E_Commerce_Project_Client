@@ -41,10 +41,10 @@ const cartSlice=createSlice({
             const productToAdd=state.products.find((product:any)=>product?.id==action.payload.id)
                 
             if(productToAdd){
-                productToAdd.orderQuantity += 1;
+                productToAdd.quantity += 1;
                 return ;
             }
-            state.products.push({ ...action.payload, orderQuantity: 1 });
+            state.products.push({ ...action.payload, quantity: 1 });
         },
 
         incrementOrderQuantity:(state,action)=>{
@@ -52,14 +52,14 @@ const cartSlice=createSlice({
             const productToIncrement=state.products.find((product:any)=>product.id==action.payload)
 
             if(productToIncrement){
-                productToIncrement.orderQuantity +=1
+                productToIncrement.quantity +=1
                 return
             }
         },
         decrementOrderQuantity:(state,action)=>{
             const productToDecrement=state.products.find((product:any)=>product.id==action.payload)
-            if(productToDecrement && productToDecrement.orderQuantity>1){
-                productToDecrement.orderQuantity -= 1
+            if(productToDecrement && productToDecrement.quantity>1){
+                productToDecrement.quantity -= 1
                 return 
             }
         },
@@ -89,8 +89,9 @@ export const orderedProductSelector=(state:RootState)=>{
 export const orderSelector=(state:RootState)=>{
     return {
         products:state.cart.products.map((product:any)=>({
-            product:product.id,
-            quantity:product.orderQuantity,
+            product_id:product.id,
+            quantity:product.quantity,
+            price:product.price 
             
         })),
         
@@ -100,7 +101,7 @@ export const orderSelector=(state:RootState)=>{
 export const subTotalSelector=(state:RootState)=>{
      return state.cart.products.reduce((acc:any, product:any) => {
  
-      return acc + product.price * product.orderQuantity;
+      return acc + product.price * product.quantity;
     
   }, 0);
 }
@@ -108,7 +109,7 @@ export const subTotalSelector=(state:RootState)=>{
 
 export const cartCountSelector = (state: RootState) => {
   return state.cart.products.reduce((total:any, product:any) => {
-    return total + product.orderQuantity;
+    return total + product.quantity;
   }, 0);
 };
 

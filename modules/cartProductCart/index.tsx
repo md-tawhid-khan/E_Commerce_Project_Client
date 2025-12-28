@@ -55,7 +55,7 @@ const CartProductCard = ({product}:{product:any}) => {
         <hr className="my-1" />
         <div className="flex items-center justify-between">
           <h2>
-            Price:
+            Price: {product.price}
            
           </h2>
           <div className="flex items-center gap-2">
@@ -66,7 +66,7 @@ const CartProductCard = ({product}:{product:any}) => {
               <Minus />
             </Button>
             <p className="font-semibold text-xl p-2">
-              {product?.orderQuantity}
+              {product?.quantity}
             </p>
             <Button
             onClick={()=>handleIncrementQuantity(product.id)}

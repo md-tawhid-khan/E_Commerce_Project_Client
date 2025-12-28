@@ -2,7 +2,8 @@ import CartBanner from "@/components/cartBanner/CartBanner";
 import CartContainer from "@/components/core/CartContainer";
 import CartProducts from "@/modules/cartProducts/CartProducts";
 import PaymentDetails from "@/modules/paymentDetails/PaymentDetails";
-import { getCurrentUser } from "@/services/auth";
+import { getCurrentUser } from "@/services/auth/getUser";
+
 
 
 

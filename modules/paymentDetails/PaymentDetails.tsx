@@ -2,10 +2,12 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { orderedProductSelector, subTotalSelector } from "@/redux/feature/cartSlice";
+import { clearCart, orderedProductSelector,  orderSelector,  subTotalSelector } from "@/redux/feature/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { createOrder } from "@/services/order";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 //import { citySelector, clearCart, couponSelector, discountAmountSelector, grandTotalSeclector, orderedProductSelector, orderSelector, shippingAddressSelector, shippingCostSelector, subTotalSelector, } from "@/redux/features/cartSlice";
 // import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -17,24 +19,34 @@ import { useRouter } from "next/navigation";
 
 const PaymentDetails = ({user}:{user:any}) => {
 
+  // console.log({user})
+
+  const [successFailed, setSuccessFailed] = useState(false)
+
   const subTotal=useAppSelector(subTotalSelector) 
 
 
 
   // const grandTotalCost=useAppSelector(grandTotalSeclector)
-//   const order=useAppSelector(orderSelector)
 
-  const products=useAppSelector(orderedProductSelector)
+  const products=useAppSelector(orderSelector)
 
+  // const products=useAppSelector(orderedProductSelector)
 
-  // const dispatch=useAppDispatch()
+     
+
+   const orderInfo = {data:{products:products}} ;
+
+  //  console.log(orderInfo) ;
+
+  const dispatch=useAppDispatch()
   
 
 
   const router=useRouter()
         
     const handleOrder=async()=>{
-      // const orderLoading=toast.loading('order is being placed')
+     
       try {
         if(!user){
            router.push("/login")
@@ -42,13 +54,23 @@ const PaymentDetails = ({user}:{user:any}) => {
         }
           
       
+      // @ts-expect-error Because products can be any type from backend
        if(products.length === 0){
         throw new Error("whart are you order, order card is empty")
        }
-
-       
-       
+  
+               const res =await createOrder(orderInfo) ;
+               console.log({res}) ;
+              if(res.success){
+                  router.push('/payment/payment_method')
+                   dispatch(clearCart());
+              }
+              else{
+               setSuccessFailed(true)
+              }
+          
      
+
       //  const res=await createOrder(couponData)
       //  console.log(res)
       
@@ -65,9 +87,9 @@ const PaymentDetails = ({user}:{user:any}) => {
 
       } 
       catch (error:any) {
-        //  toast.error(error.message,{id:orderLoading})
+         
       }
-       console.log(" payment detail ")
+      //  console.log(" payment details ")
     }
     return (
         <div className="border-2 border-white bg-background brightness-105 rounded-md col-span-4 h-fit p-5">
@@ -86,11 +108,15 @@ const PaymentDetails = ({user}:{user:any}) => {
        
       </div>
       <Button
-        onClick={handleOrder}
+        onClick={()=>handleOrder()}
         className="w-full text-xl font-semibold py-5"
       >
         Order Now
       </Button>
+
+      {
+              successFailed ? <p className='text-red-500 mt-3'>your order is not  created </p> : <p></p>
+             }
     </div>
     );
 };
