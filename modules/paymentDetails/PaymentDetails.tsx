@@ -1,43 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
-import { Button } from "@/components/ui/button";
-import { clearCart, orderedProductSelector,  orderSelector,  subTotalSelector } from "@/redux/feature/cartSlice";
+// import { Button } from "@/components/ui/button";
+import { clearCart,   orderSelector,  subTotalSelector } from "@/redux/feature/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { createOrder } from "@/services/order";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { DropdownMenuRadioGroupDemo } from "./paymentModal";
 
-//import { citySelector, clearCart, couponSelector, discountAmountSelector, grandTotalSeclector, orderedProductSelector, orderSelector, shippingAddressSelector, shippingCostSelector, subTotalSelector, } from "@/redux/features/cartSlice";
-// import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-// import { createOrder } from "@/services/cart";
-// import { useRouter } from "next/navigation";
-// import { toast } from "sonner";
+
 
 
 
 const PaymentDetails = ({user}:{user:any}) => {
 
-  // console.log({user})
+   const [order_id, setOrder_id] =useState<string | null>(null)
 
-  const [successFailed, setSuccessFailed] = useState(false)
+  const [successFailed, setSuccessFailed] = useState('')
 
   const subTotal=useAppSelector(subTotalSelector) 
+  
 
 
 
-  // const grandTotalCost=useAppSelector(grandTotalSeclector)
-
+ 
   const products=useAppSelector(orderSelector)
 
-  // const products=useAppSelector(orderedProductSelector)
+  
 
      
 
    const orderInfo = {data:{products:products}} ;
 
-  //  console.log(orderInfo) ;
+ 
 
   const dispatch=useAppDispatch()
   
@@ -53,44 +50,33 @@ const PaymentDetails = ({user}:{user:any}) => {
            throw new Error("user in missing")
         }
           
-      
+      console.log('payment details') ;
+
       // @ts-expect-error Because products can be any type from backend
        if(products.length === 0){
         throw new Error("whart are you order, order card is empty")
        }
   
                const res =await createOrder(orderInfo) ;
-               console.log({res}) ;
+            
               if(res.success){
-                  router.push('/payment/payment_method')
+                setOrder_id(res.data.id)
+                 
                    dispatch(clearCart());
               }
               else{
-               setSuccessFailed(true)
+               setSuccessFailed(res.message)
               }
           
-     
-
-      //  const res=await createOrder(couponData)
-      //  console.log(res)
-      
-      //  if(res.success){
-      //     toast.success(res.message,{id:orderLoading})
-      //      dispatch(clearCart());
-      //   router.push(res.data.paymentUrl);
-      //  }
-
-      //  if(!res.success){
-      //       toast.error(res.message,{id:orderLoading} )
-           
-      //  }
-
       } 
       catch (error:any) {
          
       }
-      //  console.log(" payment details ")
+     
     }
+
+  
+
     return (
         <div className="border-2 border-white bg-background brightness-105 rounded-md col-span-4 h-fit p-5">
       <h1 className="text-2xl font-bold">Payment Details</h1>
@@ -107,16 +93,14 @@ const PaymentDetails = ({user}:{user:any}) => {
         <p className="font-semibold">{subTotal}</p>
        
       </div>
-      <Button
-        onClick={()=>handleOrder()}
-        className="w-full text-xl font-semibold py-5"
-      >
-        Order Now
-      </Button>
 
-      {
-              successFailed ? <p className='text-red-500 mt-3'>your order is not  created </p> : <p></p>
-             }
+      <DropdownMenuRadioGroupDemo
+        onOpen={handleOrder}
+        orderId={order_id  }
+      />
+
+               <p className='text-red-500 mt-3'>{successFailed} </p> 
+            
     </div>
     );
 };

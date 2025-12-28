@@ -3,7 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 export const getClientSecret=async(orderId:string)=>{
    
     try {
-     const   res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/payment/${orderId}/payment_intents`,{
+     const   res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/payment/payment_intents?order_id=${orderId}`,{
     method:'POST',
     headers:{
         "Content-Type": "application/json",
