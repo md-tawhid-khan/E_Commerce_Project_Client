@@ -1,6 +1,5 @@
 "use client"
-import Image from "next/image";
-import emptyCart from "@/assets/empty-cart.png"
+
 // import CartProductCard from "../cartProductCart";
 // import { useAppSelector } from "@/redux/hooks";
 // import { ICartProduct, orderedProductSelector } from "@/redux/features/cartSlice";

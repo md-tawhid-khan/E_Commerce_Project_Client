@@ -23,4 +23,4 @@ export const userRegister = async(userData:any)=>{
      })
 
      return await result.json() ;
-}
+} ;
